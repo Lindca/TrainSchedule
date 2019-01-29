@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="./assets/css/reset.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Cabin+Sketch|Gugi|Miniver|Neucha|Rajdhani" rel="stylesheet">
+    <link href="./assets/css/style.css" rel="stylesheet">
+    <title>Giphy Butt</title>
+</head>
+
+<body>
+    <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDniQ-KTm3I1YetRqZyvEd1u1uSu8q6ta4",
+            authDomain: "trainschedule-12f43.firebaseapp.com",
+            databaseURL: "https://trainschedule-12f43.firebaseio.com",
+            projectId: "trainschedule-12f43",
+            storageBucket: "",
+            messagingSenderId: "1048471152863"
+        };
+        firebase.initializeApp(config);
+
+        database.ref().on("value", function (snapshot) {
+            console.log(snapshot.val());
+
+            clickCounter = snapshot.val().clickCount;
+
+            $("#click-value").text(snapshot.val().clickCount);
+        }, function (errorObject) {
+            console.log("The read failed: " + errorObject.code);
+        });
+    </script>
+</body>
+
+</html>
