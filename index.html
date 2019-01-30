@@ -11,10 +11,106 @@
         crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Cabin+Sketch|Gugi|Miniver|Neucha|Rajdhani" rel="stylesheet">
     <link href="./assets/css/style.css" rel="stylesheet">
-    <title>Giphy Butt</title>
+    <title>Train Schedule</title>
 </head>
 
 <body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <h1 class="display-4">All Aboard!</h1>
+                    <p class="lead">The following is the train schedule.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <h2>Current Train Schedule</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <h3>Train Name</h3>
+                    <p id="nameTrain"></p>
+                </div>
+                <div class="col-sm">
+                    <h3>Destination</h3>
+                    <p id="destinationTrain"></p>
+                </div>
+                <div class="col-sm">
+                    <h3>Frequency</h3>
+                    <p id="firstTimeTrain"></p>
+                </div>
+                <div class="col-sm">
+                    <h3>Next Arrival Time</h3>
+                    <p></p>
+                </div>
+                <div class="col-sm">
+                    <h3>Minutes Away</h3>
+                    <p id="frequencyTrain"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <h2>Add a Train to the Schedule</h2>
+                </div>
+            </div>
+            <form>
+                <div class="row">
+                    <div class="col-sm form-group">
+                        <label for="exampleTrainName">Train Name</label>
+                        <input type="name" class="form-control" id="nameTrain" placeholder="Enter Train Name">
+                    </div>
+                    <div class="col-sm form-group">
+                        <label for="exampleTrainDestination">Destination</label>
+                        <input type="emaildestination" class="form-control" id="destinationTrain" placeholder="Enter Train Destination">
+                    </div>
+                </div>
+            </form>
+            <form>
+                <div class="row">
+                    <div class="col-sm form-group">
+                        <label for="exampleTrainTime">First Train Time</label>
+                        <input type="first time" class="form-control" id="firstTimeTrain" placeholder="Enter the Time of the First Train">
+                    </div>
+                    <div class="col-sm form-group">
+                        <label for="exampleTrainFrequency">Frequency (minutes)</label>
+                        <input type="frequency" class="form-control" id="frequencyTrain" placeholder="Enter the Frequency of the Train">
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase.js"></script>
     <script>
         // Initialize Firebase

@@ -1,0 +1,27 @@
+body{
+    background-image: url(../images/floral.jpg);
+    color: white;
+}
+.jumbotron{
+    font-size: 30px;
+    font-family: 'Rajdhani', sans-serif;
+    background: black;
+    text-align: center;
+    margin: 20px auto;
+    width: 85%;
+}
+h1{font-family: 'Rajdhani', sans-serif;
+    font-size: 40px;
+}
+.container{
+    min-width: 80%;
+}
+.display{
+    display: inline-table;
+}
+.gif{
+margin: 10px;
+}
+button{
+    margin: 5px;
+}
