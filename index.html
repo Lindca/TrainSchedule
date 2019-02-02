@@ -9,7 +9,7 @@
     <link href="./assets/css/reset.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
         crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Cabin+Sketch|Gugi|Miniver|Neucha|Rajdhani" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville" rel="stylesheet">
     <link href="./assets/css/style.css" rel="stylesheet">
     <title>Train Schedule</title>
 </head>
@@ -20,100 +20,98 @@
             <div class="row">
                 <div class="col-sm">
                     <h1 class="display-4">All Aboard!</h1>
-                    <p class="lead">The following is the train schedule.</p>
+                    <h4>The following is the train schedule.</h4>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container1">
+            <div class="row">
+                <div class="col-sm">
+                    <h3>Current Train Schedule</h3>
+                </div>
+            </div>
+            <table class="table table-sm table-hover table-striped table-borderless table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <h4 id="addName">Train Name</h4>
+                        </th>
+                        <th>
+                            <h4 id="addDestination">Destination</h4>
+                        </th>
+                        <th>
+                            <h4 id="addFrequency">Frequency</h4>
+                        </th>
+                        <th>
+                            <h4 id="addTime">Next Arrival Time</h4>
+                        </th>
+                        <th>
+                            <h4 id="addMinutes">Minutes Away</h4>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <div class="row">
                 <div class="col-sm">
-                    <h2>Current Train Schedule</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm">
-                    <h3>Train Name</h3>
-                    <p id="nameTrain"></p>
-                </div>
-                <div class="col-sm">
-                    <h3>Destination</h3>
-                    <p id="destinationTrain"></p>
-                </div>
-                <div class="col-sm">
-                    <h3>Frequency</h3>
-                    <p id="firstTimeTrain"></p>
-                </div>
-                <div class="col-sm">
-                    <h3>Next Arrival Time</h3>
-                    <p></p>
-                </div>
-                <div class="col-sm">
-                    <h3>Minutes Away</h3>
-                    <p id="frequencyTrain"></p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm">
-                    <h2>Add a Train to the Schedule</h2>
+                    <h3>Add a Train to the Schedule</h3>
                 </div>
             </div>
             <form>
                 <div class="row">
                     <div class="col-sm form-group">
-                        <label for="exampleTrainName">Train Name</label>
+                        <label for="exampleTrainName">
+                            <h5>Train Name</h5>
+                        </label>
                         <input type="name" class="form-control" id="nameTrain" placeholder="Enter Train Name">
                     </div>
                     <div class="col-sm form-group">
-                        <label for="exampleTrainDestination">Destination</label>
-                        <input type="emaildestination" class="form-control" id="destinationTrain" placeholder="Enter Train Destination">
+                        <label for="exampleTrainDestination">
+                            <h5>Destination</h5>
+                        </label>
+                        <input type="destination" class="form-control" id="destinationTrain" placeholder="Enter Train Destination">
                     </div>
                 </div>
             </form>
             <form>
                 <div class="row">
                     <div class="col-sm form-group">
-                        <label for="exampleTrainTime">First Train Time</label>
+                        <label for="exampleTrainTime">
+                            <h5>First Train Time</h5>
+                            <p>Example: 8:30 AM</p>
+                        </label>
                         <input type="first time" class="form-control" id="firstTimeTrain" placeholder="Enter the Time of the First Train">
                     </div>
                     <div class="col-sm form-group">
-                        <label for="exampleTrainFrequency">Frequency (minutes)</label>
+                        <label for="exampleTrainFrequency">
+                            <h5>Frequency (minutes)</h5>
+                            <p>Example: 20</p>
+                        </label>
                         <input type="frequency" class="form-control" id="frequencyTrain" placeholder="Enter the Frequency of the Train">
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm form-group">
+                        <button id="submit" type="button" class="btn btn-light">
+                            <h5>Submit</h5>
+                        </button>
+                    </div>
+                </div>
             </form>
-
-
         </div>
     </div>
-    </div>
-    </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase.js"></script>
     <script>
-        // Initialize Firebase
+        // adding firebase
         var config = {
             apiKey: "AIzaSyDniQ-KTm3I1YetRqZyvEd1u1uSu8q6ta4",
             authDomain: "trainschedule-12f43.firebaseapp.com",
@@ -124,15 +122,69 @@
         };
         firebase.initializeApp(config);
 
-        database.ref().on("value", function (snapshot) {
-            console.log(snapshot.val());
+        // set up global vars
+        var trainName;
+        var trainDestination;
+        var trainTime;
+        var trainFrequency;
+        var trainMinutesAway;
+        var nextTrain;
+        // the time NOW
+        var momentTime = moment();
+        var dbObj;
 
-            clickCounter = snapshot.val().clickCount;
+        function calculateMinAwayNext() {
+            // the time the train arrives formatted
+            var formTrainTime = moment(trainTime).format("HH:mm a");
+            // console.log(formTrainTime);
+            // format the number into minutes
+            var formMinutesAway = moment(frequency).format("mm");
+            // console.log(formMinutesAway);
+            // get the number of minutes away the train is
+            trainMinutesAway= momentTime.diff(formTrainTime, "minutes");
+            // get the time the next train is arriving
+            nextTrain = momentTime.add(formMinutesAway, "minutes");
 
-            $("#click-value").text(snapshot.val().clickCount);
-        }, function (errorObject) {
-            console.log("The read failed: " + errorObject.code);
-        });
+        }
+
+        var database = firebase.database();
+
+        database.ref().on(
+            'child_added',
+            function (db) {
+                dbObj = db.val();
+                var newRow = $("<tr>");
+                newRow.append($("<td>" + dbObj.name + "</td>"));
+                newRow.append($("<td>" + dbObj.destination + "</td>"));
+                newRow.append($("<td>" + dbObj.frequency + "</td>"));
+                newRow.append($("<td>" + dbObj.nextarrival + "</td>"));
+                newRow.append($("<td>" + dbObj.minutesaway + "</td>"));
+                $("tbody").append(newRow);
+            },
+            function (e) {
+                console.log(e);
+            }
+        );
+
+        $("#submit").on("click", function () {
+            event.preventDefault();
+            trainName = $("#nameTrain").val().trim();
+            trainDestination = $("#destinationTrain").val().trim();
+            trainTime = $("#firstTimeTrain").val().trim();
+            trainFrequency = $("#frequencyTrain").val().trim();
+            // push info to database
+            calculateMinAwayNext();
+            database.ref().push({
+                name: trainName,
+                destination: trainDestination,
+                firsttime: trainTime,
+                frequency: trainFrequency,
+                nextarrival: nextTrain,
+                minutesaway: trainMinutesAway,
+            });
+
+        })
+
     </script>
 </body>
 

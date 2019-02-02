@@ -3,25 +3,17 @@ body{
     color: white;
 }
 .jumbotron{
-    font-size: 30px;
-    font-family: 'Rajdhani', sans-serif;
+    font-size: 17px;
+    font-family: 'Libre Baskerville', serif;
     background: black;
     text-align: center;
     margin: 20px auto;
     width: 85%;
 }
-h1{font-family: 'Rajdhani', sans-serif;
-    font-size: 40px;
+h1{font-family: 'Libre Baskerville', serif;
 }
 .container{
     min-width: 80%;
 }
-.display{
-    display: inline-table;
-}
-.gif{
-margin: 10px;
-}
-button{
-    margin: 5px;
-}
+
+
