@@ -165,7 +165,7 @@
             trainMinutesAway = trainFrequency - momentTime.diff(startTrain, "minutes") % trainFrequency;
             console.log("minutes away", trainMinutesAway);
 
-            nextTrain = moment().add("minutes",trainMinutesAway);
+            nextTrain = moment().add(trainMinutesAway,"minutes");
             formNextTrain=nextTrain.format("hh:mm A");
             console.log("arrival", formNextTrain);
 
