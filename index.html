@@ -130,22 +130,21 @@
         var trainMinutesAway;
         var nextTrain;
         // the time NOW
-        var momentTime = moment();
+        var momentTime=moment();
         var dbObj;
 
-        function calculateMinAwayNext() {
-            // the time the train arrives formatted
-            var formTrainTime = moment(trainTime).format("HH:mm a");
-            // console.log(formTrainTime);
-            // format the number into minutes
-            var formMinutesAway = moment(frequency).format("mm");
-            // console.log(formMinutesAway);
-            // get the number of minutes away the train is
-            trainMinutesAway= momentTime.diff(formTrainTime, "minutes");
-            // get the time the next train is arriving
-            nextTrain = momentTime.add(formMinutesAway, "minutes");
 
+        function calculateMinAwayNext() {
+            var randomFormat = "hh:mm a";
+            var convertedTime = moment(trainTime, randomFormat);
+            var formtrainFrequency = parseInt(trainFrequency);
+           // (convertedDate.diff(newDate, "days"))
+            var diff = momentTime.diff(convertedTime, "minutes") % formtrainFrequency;
+            trainMinutesAway = formtrainFrequency - diff;
+            nextTrain=moment().add(trainMinutesAway,"minutes").format(randomFormat);
+            console.log(nextTrain)
         }
+        
 
         var database = firebase.database();
 
