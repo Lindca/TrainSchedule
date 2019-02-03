@@ -142,7 +142,7 @@
             var diff = momentTime.diff(convertedTime, "minutes") % formtrainFrequency;
             trainMinutesAway = formtrainFrequency - diff;
             nextTrain = moment().add("minutes", trainMinutesAway);
-            formNextTrain = nextTrain.format(randomFormat);
+            var formNextTrain = nextTrain.format(randomFormat);
         }
 
 
