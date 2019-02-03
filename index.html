@@ -130,35 +130,38 @@
         var trainMinutesAway;
         var nextTrain;
         // the time NOW
-        var momentTime=moment();
+        var momentTime = moment();
         var dbObj;
 
-
+        setInterval(calculateMinAwayNext, 1000);
         function calculateMinAwayNext() {
             var randomFormat = "hh:mm a";
             var convertedTime = moment(trainTime, randomFormat);
             var formtrainFrequency = parseInt(trainFrequency);
-           // (convertedDate.diff(newDate, "days"))
+            // (convertedDate.diff(newDate, "days"))
             var diff = momentTime.diff(convertedTime, "minutes") % formtrainFrequency;
             trainMinutesAway = formtrainFrequency - diff;
-            nextTrain=moment().add(trainMinutesAway,"minutes").format(randomFormat);
-            console.log(nextTrain)
+            nextTrain = moment().add("minutes", trainMinutesAway);
+            formNextTrain = nextTrain.format(randomFormat);
         }
-        
+
+
 
         var database = firebase.database();
 
         database.ref().on(
             'child_added',
             function (db) {
+                calculateMinAwayNext();
                 dbObj = db.val();
                 var newRow = $("<tr>");
                 newRow.append($("<td>" + dbObj.name + "</td>"));
                 newRow.append($("<td>" + dbObj.destination + "</td>"));
                 newRow.append($("<td>" + dbObj.frequency + "</td>"));
-                newRow.append($("<td>" + dbObj.nextarrival + "</td>"));
-                newRow.append($("<td>" + dbObj.minutesaway + "</td>"));
+                newRow.append($("<td>" + formNextTrain + "</td>"));
+                newRow.append($("<td>" + trainMinutesAway + "</td>"));
                 $("tbody").append(newRow);
+
             },
             function (e) {
                 console.log(e);
@@ -172,14 +175,13 @@
             trainTime = $("#firstTimeTrain").val().trim();
             trainFrequency = $("#frequencyTrain").val().trim();
             // push info to database
-            calculateMinAwayNext();
             database.ref().push({
                 name: trainName,
                 destination: trainDestination,
                 firsttime: trainTime,
                 frequency: trainFrequency,
-                nextarrival: nextTrain,
-                minutesaway: trainMinutesAway,
+                // nextarrival: nextTrain,
+                // minutesaway: trainMinutesAway,
             });
 
         })
