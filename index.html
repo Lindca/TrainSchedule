@@ -125,46 +125,60 @@
         // set up global vars
         var trainName;
         var trainDestination;
-        var trainTime;
+        var startTime;
         var trainFrequency;
         var trainMinutesAway;
-        var nextTrain;
         // the time NOW
         var momentTime = moment();
         var dbObj;
         var formNextTrain;
-        
+        var nextTrain;
+
 
         // setInterval(calculateMinAwayNext, 1000);
-        function calculateMinAwayNext() {
-            var randomFormat = "hh:mm a";
-            var convertedTime = moment(trainTime, randomFormat);
-            var formtrainFrequency = parseInt(trainFrequency);
-            // (convertedDate.diff(newDate, "days"))
-            var diff = momentTime.diff(convertedTime, "minutes") % formtrainFrequency;
-            trainMinutesAway = formtrainFrequency - diff;
-            nextTrain = moment().add("minutes", trainMinutesAway);
-            formNextTrain = nextTrain.format(randomFormat);
-        }
+        // function calculateMinAwayNext() {
+        //     var randomFormat = "hh:mm A";
+        //     var convertedTime = moment(trainTime, randomFormat);
+        //     var formtrainFrequency = parseInt(trainFrequency);
+        //     // (convertedDate.diff(newDate, "days"))
+        //     var diff = momentTime.diff(convertedTime, "minutes") % formtrainFrequency;
+        //     trainMinutesAway = formtrainFrequency - diff;
+        //     nextTrain = moment().add("minutes", trainMinutesAway);
+        //     formNextTrain = nextTrain.format(randomFormat);
+        // }
 
 
 
         var database = firebase.database();
 
-        database.ref().on(
-            'child_added',
-            function (db) {
-                calculateMinAwayNext();
-                dbObj = db.val();
-                var newRow = $("<tr>");
-                newRow.append($("<td>" + dbObj.name + "</td>"));
-                newRow.append($("<td>" + dbObj.destination + "</td>"));
-                newRow.append($("<td>" + dbObj.frequency + "</td>"));
-                newRow.append($("<td>" + formNextTrain + "</td>"));
-                newRow.append($("<td>" + trainMinutesAway + "</td>"));
-                $("tbody").append(newRow);
+        database.ref().on('child_added', function (db) {
+            dbObj = db.val();
+            console.log("user's input", dbObj.firsttime);
 
-            },
+            // create moment.js object for train time and frequency
+            startTrain = moment(dbObj.firsttime, "HH:mm A");
+            console.log("start time: ", startTrain.format("HH:mm A"));
+
+            trainFrequency = parseInt(dbObj.frequency);
+            console.log("frequency", trainFrequency);
+
+            trainMinutesAway = trainFrequency - momentTime.diff(startTrain, "minutes") % trainFrequency;
+            console.log("minutes away", trainMinutesAway);
+
+            nextTrain = moment().add("minutes",trainMinutesAway);
+            formNextTrain=nextTrain.format("hh:mm A");
+            console.log("arrival", formNextTrain);
+
+            // //---------------------------------------------//
+        
+            var newRow = $("<tr>");
+            newRow.append($("<td>" + dbObj.name + "</td>"));
+            newRow.append($("<td>" + dbObj.destination + "</td>"));
+            newRow.append($("<td>" + dbObj.frequency + "</td>"));
+            newRow.append($("<td>" + formNextTrain + "</td>"));
+            newRow.append($("<td>" + trainMinutesAway + "</td>"));
+            $("tbody").append(newRow);
+        },
             function (e) {
                 console.log(e);
             }
@@ -174,16 +188,16 @@
             event.preventDefault();
             trainName = $("#nameTrain").val().trim();
             trainDestination = $("#destinationTrain").val().trim();
-            trainTime = $("#firstTimeTrain").val().trim();
+            startTime = $("#firstTimeTrain").val().trim();
             trainFrequency = $("#frequencyTrain").val().trim();
             // push info to database
             database.ref().push({
                 name: trainName,
                 destination: trainDestination,
-                firsttime: trainTime,
+                firsttime: startTime,
                 frequency: trainFrequency,
-                // nextarrival: nextTrain,
-                // minutesaway: trainMinutesAway,
+                nexttrain: formNextTrain,
+                minutesaway: trainMinutesAway,
             });
 
         })
