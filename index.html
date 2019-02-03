@@ -133,44 +133,24 @@
         var dbObj;
         var formNextTrain;
         var nextTrain;
-
-
-        // setInterval(calculateMinAwayNext, 1000);
-        // function calculateMinAwayNext() {
-        //     var randomFormat = "hh:mm A";
-        //     var convertedTime = moment(trainTime, randomFormat);
-        //     var formtrainFrequency = parseInt(trainFrequency);
-        //     // (convertedDate.diff(newDate, "days"))
-        //     var diff = momentTime.diff(convertedTime, "minutes") % formtrainFrequency;
-        //     trainMinutesAway = formtrainFrequency - diff;
-        //     nextTrain = moment().add("minutes", trainMinutesAway);
-        //     formNextTrain = nextTrain.format(randomFormat);
-        // }
-
-
-
         var database = firebase.database();
-
+        // this was not as easy as I would have liked 
+        // VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
         database.ref().on('child_added', function (db) {
             dbObj = db.val();
-            console.log("user's input", dbObj.firsttime);
-
-            // create moment.js object for train time and frequency
+            console.log("the first known time of the train", dbObj.firsttime);
+            // get the input for the first train time and make it a var
             startTrain = moment(dbObj.firsttime, "HH:mm A");
-            console.log("start time: ", startTrain.format("HH:mm A"));
-
+            // turn the frequency into a integer
             trainFrequency = parseInt(dbObj.frequency);
-            console.log("frequency", trainFrequency);
-
+            // do the modulas thing to get the remainder of minutes and subtract
             trainMinutesAway = trainFrequency - momentTime.diff(startTrain, "minutes") % trainFrequency;
-            console.log("minutes away", trainMinutesAway);
-
-            nextTrain = moment().add(trainMinutesAway,"minutes");
-            formNextTrain=nextTrain.format("hh:mm A");
-            console.log("arrival", formNextTrain);
-
-            // //---------------------------------------------//
-        
+            // add the remainder to the current time to get the next train time
+            nextTrain = moment().add(trainMinutesAway, "minutes");
+            // format the next train time into a readable thing
+            formNextTrain = nextTrain.format("hh:mm A");
+            //-----------------------------------------------------------------------------//
+            // add all the database stuff to the screen
             var newRow = $("<tr>");
             newRow.append($("<td>" + dbObj.name + "</td>"));
             newRow.append($("<td>" + dbObj.destination + "</td>"));
@@ -186,6 +166,7 @@
 
         $("#submit").on("click", function () {
             event.preventDefault();
+            // grab inputs on click
             trainName = $("#nameTrain").val().trim();
             trainDestination = $("#destinationTrain").val().trim();
             startTime = $("#firstTimeTrain").val().trim();
