@@ -132,6 +132,8 @@
         // the time NOW
         var momentTime = moment();
         var dbObj;
+        var formNextTrain;
+        
 
         setInterval(calculateMinAwayNext, 1000);
         function calculateMinAwayNext() {
@@ -142,7 +144,7 @@
             var diff = momentTime.diff(convertedTime, "minutes") % formtrainFrequency;
             trainMinutesAway = formtrainFrequency - diff;
             nextTrain = moment().add("minutes", trainMinutesAway);
-            var formNextTrain = nextTrain.format(randomFormat);
+            formNextTrain = nextTrain.format(randomFormat);
         }
 
 
